@@ -1,0 +1,9 @@
+.dart_tool/
+build/
+node_modules/
+*.mjs
+*.wasm
+*.wasm.o
+*.wasm.map
+pnpm-lock.yaml
+pubspec.lock

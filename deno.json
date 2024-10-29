@@ -1,0 +1,11 @@
+{
+  "tasks": {
+    "dev": "deno run --watch main.ts",
+    "build:js": "dart compile js -O4 -o main.dart.js lib/main.dart",
+    "build:wasm": "dart compile wasm -E  --enable-experimental-wasm-interop -E --js-runtime-output=main.wasm.mjs -o main.wasm lib/main.dart",
+    "build:math": "zig build-exe native/math.zig -target wasm32-freestanding -fno-entry --export=add"
+  },
+  "imports": {
+    "@std/assert": "jsr:@std/assert@1"
+  }
+}
