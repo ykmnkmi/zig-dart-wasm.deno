@@ -1,7 +1,9 @@
 ## Setup
 
 Run `deno task zig` to build Zig WASM module.
+
 Run `deno task dart` to build Dart WASM module.
+
 Run `deno run -A main.ts` to run the Deno benchmark.
 
 ## Results
