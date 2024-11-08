@@ -3,7 +3,7 @@ import 'dart:_wasm';
 
 @pragma('wasm:export', 'add')
 WasmI32 _add(WasmI32 a, WasmI32 b) {
-  return add(a.toIntUnsigned(), b.toIntUnsigned()).toWasmI32();
+  return add(a.toIntSigned(), b.toIntSigned()).toWasmI32();
 }
 
 int add(int a, int b) {

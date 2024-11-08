@@ -13,10 +13,10 @@ Runtime | Deno 2.0.0 (x86_64-pc-windows-msvc)
 
 benchmark                time/iter (avg)        iter/s      (min … max)           p75      p99     p995
 ------------------------ ----------------------------- --------------------- --------------------------
-Zig WASM export add *             8.2 ns   122,600,000 (  8.0 ns …  73.2 ns)   8.0 ns  11.9 ns  13.5 ns
-Dart WASM export add *            6.9 ns   145,500,000 (  6.4 ns …  63.5 ns)   6.8 ns   8.7 ns  10.7 ns
-Data JS set add *               155.9 ns     6,416,000 (145.8 ns … 284.5 ns) 157.1 ns 225.5 ns 244.4 ns
-Zig WASM export add               8.1 ns   123,300,000 (  8.0 ns …  60.5 ns)   8.1 ns   9.7 ns  12.1 ns
-Dart WASM export add              6.9 ns   145,300,000 (  6.5 ns …  17.0 ns)   6.9 ns  10.2 ns  12.1 ns
-Data JS set add                 157.3 ns     6,357,000 (149.2 ns … 212.4 ns) 159.5 ns 194.5 ns 200.9 ns
+Zig WASM export add *             8.1 ns   123,300,000 (  8.0 ns …  61.6 ns)   8.0 ns  11.1 ns  12.7 ns
+Dart WASM export add *            6.7 ns   148,400,000 (  6.4 ns …  61.3 ns)   6.8 ns   9.6 ns  11.4 ns
+Data JS set add *               154.1 ns     6,490,000 (144.2 ns … 231.5 ns) 155.7 ns 224.1 ns 228.1 ns
+Zig WASM export add               8.1 ns   123,500,000 (  8.0 ns …  21.0 ns)   8.1 ns  10.6 ns  12.2 ns
+Dart WASM export add              6.7 ns   149,900,000 (  6.4 ns …  58.9 ns)   6.7 ns   9.7 ns  10.8 ns
+Data JS set add                 163.1 ns     6,132,000 (151.9 ns … 240.7 ns) 165.8 ns 197.8 ns 211.4 ns
 ```
