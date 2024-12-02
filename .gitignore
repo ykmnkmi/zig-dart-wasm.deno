@@ -1,6 +1,7 @@
 .dart_tool/
 build/
 node_modules/
+sdk/
 *.mjs
 *.wasm
 *.wasm.o
