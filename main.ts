@@ -1,6 +1,6 @@
 import { instantiate, invoke } from './main.wasm.ts';
 
-const zigModule = await WebAssembly.compile(Deno.readFileSync('math.wasm'));
+const zigModule = await WebAssembly.compile(Deno.readFileSync('module.wasm'));
 const dartModule = await WebAssembly.compile(Deno.readFileSync('main.wasm'));
 
 const zig = await WebAssembly.instantiate(zigModule);

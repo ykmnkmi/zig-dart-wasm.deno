@@ -1,6 +1,6 @@
 import 'dart:js_interop';
 
-import 'package:zig_dart_wasm/math.dart';
+import 'package:zig_dart_wasm/module.dart';
 
 @JS('add')
 external set addJS(JSFunction f);
