@@ -1,7 +1,7 @@
 {
   "tasks": {
     "dart": "dart compile wasm -O4 -E --enable-experimental-wasm-interop -E --js-runtime-output=dart.wasm.mjs -o dart.wasm lib/dart.dart",
-    "zig": "zig build-exe native/zig.zig -target wasm32-freestanding -fno-entry --export=mandelbrot -O ReleaseSafe",
+    "zig": "zig build-exe native/zig.zig -target wasm32-freestanding -fno-entry --export=add --export=pow -O ReleaseFast",
     "build": "deno task zig; deno task dart"
   },
   "imports": {
