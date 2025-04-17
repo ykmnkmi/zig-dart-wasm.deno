@@ -1,12 +1,12 @@
 name: zig_dart_wasm
 description: Zig and Dart WebAssembly interop
-version: 0.0.1
+version: 0.0.2
 
 environment:
-  sdk: '>=3.5.3 <4.0.0'
+  sdk: '>=3.7.2 <4.0.0'
 
 dependencies:
-  web: ^1.1.0
+  web: ^1.1.1
 
 dev_dependencies:
-  lints: ^5.0.0
+  lints: ^5.1.1

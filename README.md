@@ -2,9 +2,7 @@
 
 Zig 0.13.0, Dart 3.5.3, Deno 2.0.0.
 
-Run `deno task zig` to build Zig WASM module.
-
-Run `deno task dart` to build Dart WASM module.
+Run `deno task build` to build WASM module.
 
 Run `deno bench -A main.ts` to run the Deno benchmark.
 
