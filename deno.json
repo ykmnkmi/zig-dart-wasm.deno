@@ -3,6 +3,6 @@
     "zig:wasm": "zig build-exe lib/zig.zig -target wasm32-freestanding -fno-entry --export=add --export=pow -O ReleaseFast",
     "dart:wasm": "dart compile wasm -O4 -E --enable-experimental-wasm-interop -E --js-runtime-output=dart.wasm.mjs -o dart.wasm lib/dart.wasm.dart",
     "dart:js": "dart compile js -O4 -o dart.js lib/dart.js.dart",
-    "build": "deno task zig:wasm; deno task dart:wasm; deno task dart:wasm"
+    "build": "deno task zig:wasm; deno task dart:wasm; deno task dart:js"
   }
 }
