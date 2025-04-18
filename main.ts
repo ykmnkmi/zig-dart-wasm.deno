@@ -1,6 +1,8 @@
 import { zig } from './zig.wasm.ts';
 import { dart } from './dart.wasm.ts';
 
+import './dart.js';
+
 interface Library {
   add(a: number, b: number): number;
 
@@ -9,101 +11,128 @@ interface Library {
 
 interface WASMExports extends Library, WebAssembly.Exports { }
 
-const Zig = await zig() as WASMExports;
+const ZigWASMExports = await zig() as WASMExports;
 
-const Dart = await dart() as WASMExports;
+const DartWASMExports = await dart() as WASMExports;
 
-// deno-lint-ignore no-explicit-any
-const DartJS = globalThis as any as Library;
+declare global {
+  function exportDartWASMJSBindings(): Library;
 
-{ // add
+  function exportDartJSBindings(): Library;
+}
+
+const DartWASMJSInterop = exportDartWASMJSBindings();
+
+const DartJSInterop = exportDartJSBindings();
+
+const DenoLibrary = {
+  add(a: number, b: number): number {
+    return a + b;
+  },
+
+  pow(n: number, p: number): number {
+    return Math.pow(n, p);
+  },
+} as Library;
+
+const equals = <T>(value: T, expected: T): void => {
+  if (value !== expected) {
+    throw new Error(`Expected ${expected}, got ${value}.`);
+  }
+};
+
+{
   Deno.bench({
-    name: 'Zig add *',
+    name: 'Deno: add',
+    group: 'add',
+    warmup: 10,
+    baseline: true,
     fn() {
-      equals(Zig.add(1, 2), 3);
+      equals(DenoLibrary.add(1, 2), 3);
     },
   });
 
   Deno.bench({
-    name: 'Dart add *',
+    name: 'Zig WASM exports: add',
+    group: 'add',
+    warmup: 10,
     fn() {
-      equals(Dart.add(1, 2), 3);
+      equals(ZigWASMExports.add(1, 2), 3);
     },
   });
 
   Deno.bench({
-    name: 'DartJS add *',
+    name: 'Dart WASM exports: add',
+    group: 'add',
+    warmup: 10,
     fn() {
-      equals(DartJS.add(1, 2), 3);
+      equals(DartWASMExports.add(1, 2), 3);
     },
   });
 
   Deno.bench({
-    name: 'Zig pow *',
+    name: 'Dart WASM-JS interop: add',
+    group: 'add',
+    warmup: 10,
     fn() {
-      equals(Zig.pow(1, 2), 1);
+      equals(DartWASMJSInterop.add(1, 2), 3);
     },
   });
 
   Deno.bench({
-    name: 'Dart pow *',
+    name: 'Dart JS interop: add',
+    group: 'add',
+    warmup: 10,
     fn() {
-      equals(Dart.pow(1, 2), 1);
-    },
-  });
-
-  Deno.bench({
-    name: 'DartJS pow *',
-    fn() {
-      equals(DartJS.pow(1, 2), 1);
-    },
-  });
-
-  Deno.bench({
-    name: 'Zig add',
-    fn() {
-      equals(Zig.add(1, 2), 3);
-    },
-  });
-
-  Deno.bench({
-    name: 'Dart add',
-    fn() {
-      equals(Dart.add(1, 2), 3);
-    },
-  });
-
-  Deno.bench({
-    name: 'DartJS add',
-    fn() {
-      equals(DartJS.add(1, 2), 3);
-    },
-  });
-
-  Deno.bench({
-    name: 'Zig pow',
-    fn() {
-      equals(Zig.pow(2, 15), 32768);
-    },
-  });
-
-  Deno.bench({
-    name: 'Dart pow',
-    fn() {
-      equals(Dart.pow(2, 15), 32768);
-    },
-  });
-
-  Deno.bench({
-    name: 'DartJS pow',
-    fn() {
-      equals(DartJS.pow(2, 15), 32768);
+      equals(DartJSInterop.add(1, 2), 3);
     },
   });
 }
 
-function equals<T>(value: T, expected: T) {
-  if (value !== expected) {
-    throw new Error(`Expected ${expected}, got ${value}.`);
-  }
+{
+  Deno.bench({
+    name: 'Deno: pow',
+    group: 'pow',
+    warmup: 10,
+    baseline: true,
+    fn() {
+      equals(DenoLibrary.pow(2, 15), 32768);
+    },
+  });
+
+  Deno.bench({
+    name: 'Zig WASM exports: pow',
+    group: 'pow',
+    warmup: 10,
+    fn() {
+      equals(ZigWASMExports.pow(2, 15), 32768);
+    },
+  });
+
+  Deno.bench({
+    name: 'Dart WASM exports: pow',
+    group: 'pow',
+    warmup: 10,
+    fn() {
+      equals(DartWASMExports.pow(2, 15), 32768);
+    },
+  });
+
+  Deno.bench({
+    name: 'Dart WASM-JS interop: pow',
+    group: 'pow',
+    warmup: 10,
+    fn() {
+      equals(DartWASMJSInterop.pow(2, 15), 32768);
+    },
+  });
+
+  Deno.bench({
+    name: 'Dart JS interop: pow',
+    group: 'pow',
+    warmup: 10,
+    fn() {
+      equals(DartJSInterop.pow(2, 15), 32768);
+    },
+  });
 }

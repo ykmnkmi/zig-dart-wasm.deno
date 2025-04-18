@@ -1,6 +1,6 @@
 ## Setup
 
-Zig 0.13.0, Dart 3.5.3, Deno 2.0.0.
+Zig 0.14.0, Dart 3.7.2, Deno 2.2.10.
 
 Run `deno task build` to build WASM module.
 
@@ -9,20 +9,36 @@ Run `deno bench -A main.ts` to run the Deno benchmark.
 ## Results
 ```
     CPU | Intel(R) Core(TM) i5-8500 CPU @ 3.00GHz
-Runtime | Deno 2.0.0 (x86_64-pc-windows-msvc)
+Runtime | Deno 2.2.10 (x86_64-pc-windows-msvc)
 
-benchmark                time/iter (avg)        iter/s      (min … max)           p75      p99     p995
------------------------- ----------------------------- --------------------- --------------------------
-Zig WASM export add *             6.4 ns   155,300,000 (  6.3 ns …  57.7 ns)   6.4 ns   8.5 ns  10.3 ns
-Dart WASM export add *            6.6 ns   151,000,000 (  6.5 ns …  59.2 ns)   6.5 ns   8.9 ns  10.7 ns
-Data WASM JS set add *          146.9 ns     6,809,000 (139.2 ns … 223.8 ns) 148.5 ns 192.3 ns 223.2 ns
-Zig WASM export add               7.1 ns   140,400,000 (  6.8 ns …  68.6 ns)   7.0 ns   9.9 ns  11.3 ns
-Dart WASM export add              7.4 ns   136,000,000 (  7.0 ns …  61.8 ns)   7.3 ns  10.3 ns  11.6 ns
-Data WASM JS set add            147.8 ns     6,767,000 (140.2 ns … 265.0 ns) 149.4 ns 201.6 ns 234.6 ns
-Zig WASM export fib *            10.1 ns    98,920,000 (  9.8 ns …  66.9 ns)  10.0 ns  14.0 ns  15.8 ns
-Dart WASM export fib *           14.7 ns    67,930,000 ( 13.8 ns …  70.4 ns)  14.8 ns  17.5 ns  19.0 ns
-Data WASM JS set fib *          107.7 ns     9,287,000 (104.1 ns … 176.6 ns) 111.1 ns 133.2 ns 142.9 ns
-Zig WASM export fib              13.5 µs        74,010 ( 13.1 µs … 136.6 µs)  13.5 µs  13.9 µs  18.8 µs
-Dart WASM export fib             18.4 µs        54,290 ( 18.0 µs … 411.1 µs)  18.2 µs  19.1 µs  32.3 µs
-Data WASM JS set fib             18.6 µs        53,780 ( 18.2 µs … 264.1 µs)  18.4 µs  21.3 µs  32.3 µs
+benchmark                   time/iter (avg)        iter/s      (min … max)           p75      p99     p995
+--------------------------- ----------------------------- --------------------- --------------------------
+
+group add
+Deno: add                            4.6 ns   217,900,000 (  4.4 ns …  58.1 ns)   4.5 ns   6.0 ns   7.0 ns
+Zig WASM exports: add                7.1 ns   141,200,000 (  6.4 ns …  66.2 ns)   7.1 ns  11.1 ns  12.9 ns
+Dart WASM exports: add               6.8 ns   146,300,000 (  6.3 ns … 956.5 ns)   6.7 ns  10.4 ns  11.8 ns
+Dart WASM-JS interop: add          121.8 ns     8,209,000 (111.9 ns … 231.8 ns) 123.1 ns 180.4 ns 190.4 ns
+Dart JS interop: add                 4.5 ns   222,700,000 (  4.3 ns …  15.9 ns)   4.5 ns   5.4 ns   6.8 ns
+
+summary
+  Deno: add
+     1.02x slower than Dart JS interop: add
+     1.49x faster than Dart WASM exports: add
+     1.54x faster than Zig WASM exports: add
+    26.54x faster than Dart WASM-JS interop: add
+
+group pow
+Deno: pow                            4.6 ns   216,400,000 (  4.4 ns …  59.1 ns)   4.6 ns   6.1 ns   7.7 ns
+Zig WASM exports: pow               16.4 ns    61,110,000 ( 15.9 ns …  68.4 ns)  16.3 ns  20.4 ns  22.7 ns
+Dart WASM exports: pow              14.8 ns    67,490,000 ( 12.7 ns …  70.4 ns)  18.0 ns  21.8 ns  24.4 ns
+Dart WASM-JS interop: pow          142.5 ns     7,020,000 (136.6 ns … 283.5 ns) 143.1 ns 192.2 ns 199.0 ns
+Dart JS interop: pow                 4.3 ns   232,100,000 (  4.1 ns …  12.2 ns)   4.4 ns   5.0 ns   5.9 ns
+
+summary
+  Deno: pow
+     1.07x slower than Dart JS interop: pow
+     3.21x faster than Dart WASM exports: pow
+     3.54x faster than Zig WASM exports: pow
+    30.83x faster than Dart WASM-JS interop: pow
 ```

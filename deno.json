@@ -1,10 +1,8 @@
 {
   "tasks": {
-    "dart": "dart compile wasm -O4 -E --enable-experimental-wasm-interop -E --js-runtime-output=dart.wasm.mjs -o dart.wasm lib/dart.dart",
-    "zig": "zig build-exe native/zig.zig -target wasm32-freestanding -fno-entry --export=add --export=pow -O ReleaseFast",
-    "build": "deno task zig; deno task dart"
-  },
-  "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+    "zig:wasm": "zig build-exe lib/zig.zig -target wasm32-freestanding -fno-entry --export=add --export=pow -O ReleaseFast",
+    "dart:wasm": "dart compile wasm -O4 -E --enable-experimental-wasm-interop -E --js-runtime-output=dart.wasm.mjs -o dart.wasm lib/dart.wasm.dart",
+    "dart:js": "dart compile js -O4 -o dart.js lib/dart.js.dart",
+    "build": "deno task zig:wasm; deno task dart:wasm; deno task dart:wasm"
   }
 }

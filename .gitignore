@@ -2,6 +2,9 @@
 build/
 node_modules/
 sdk/
+*.js
+*.js.deps
+*.js.map
 *.mjs
 *.wasm
 *.wasm.o
